@@ -16,7 +16,7 @@ app.use(cors())
 
 
 
-app.get('/', (req, res) => {
+app.get('/GET', (req, res) => {
     console.log(req.query)
     console.log("i am inside get")
 
@@ -30,6 +30,7 @@ app.get('/', (req, res) => {
     });
 
 });
+
 app.get('/:id', (req, res) => {
     // console.log(`select * from form  where id=${req.params.id}`)
     // console.log(req.query)
@@ -58,7 +59,8 @@ app.post('/post', (req, res) => {
   ,[req.body.firstname,req.body.scondname,req.body.email,req.body.phone,req.body.messsages], function (error, results) {
  
  
- if(error) console.log(error);
+ 
+    if(error) console.log(error);
   console.log(results)
   res.json(results);
  });
@@ -69,7 +71,7 @@ app.put('/upadte/:id', (req, res) => {
     console.log("i am inside get",`select * from form  Where id=${req.params.id}`)
 
 
-    connection.query(`update form  set firstname=?,scondname=? where id=?`,[req.body.firstname,req.body.scondname,req.params.id],function (error, results) {
+    connection.query(`update form  set firstname=?,scondname=?,phone=?,email=?,messsages=?   where id=?`,[req.body.firstname,req.body.scondname,req.body.phone,req.body.email,req.body.messsages,req.params.id],function (error, results) {
 
         if (error) {
             console.log(error)

@@ -12,7 +12,7 @@
 </head>
 
 <body style="padding: 232px;">
-
+<form id="forms">
   <div class="row">
     <div class=" col-12  col-sm-12 col-lg-6">
       <input type="text" name="id" id="id" placeholder=" id" class="form-control">
@@ -43,12 +43,13 @@
 
     </div>
   </div>
-
-
-  <button type="button" class="btn btn-primary" onclick="createuser()">Send Messages</button>
-  <button type="button" class="btn btn-primary" onclick="edit()">Edit</button>
+  
+  <button type="button" class="btn btn-primary" id="submitBtn" onclick="createuser()">Send Messages</button>
+  <button type="button" class="btn btn-primary" id="updateBtn" onclick="update()">update</button>
+  <button type="button" class="btn btn-primary" onclick="get()">get</button>
+  
   </div>
-
+</form>
   <table>
     <thead>
       <tr>
@@ -66,10 +67,12 @@
     <tbody>
 
     </tbody>
-</body>
-<script>
 
+<script>
+let form=document.getElementById('forms')
   function createuser() {
+   
+ document.getElementById('userForm').reset()
     fetch('http://localhost:3000/post', {
       method: 'POST',
       body: JSON.stringify({
@@ -86,9 +89,14 @@
     })
       .then((response) => response.json())
       .then((json) => console.log(json));
+      form.reset();
   }
 
   function edit(id) {
+    document.getElementById('updateBtn').style.display="block";
+document.getElementById('submitBtn').style.display="none";
+
+
     fetch('http://localhost:3000/'+id)
       .then((response) => response.json())
       .then((json) => {console.log(json)
@@ -101,13 +109,86 @@
       document.getElementById("phone").value=e.phone,
          document.getElementById("email").value=e.email,
        document.getElementById("messsages").value =e.messsages
+       document.getElementById('form-btn').textContent = "Update";
+
         })
   });
+  
   }
-</script>
+ 
 
-<script>
-  fetch('http://localhost:3000/')
+
+  // function edit(id) {
+  //   fetch('http://localhost:3000/'+id)
+  //     .then((response) => response.json())
+  //     .then((json) => {console.log(json)
+  //       json.forEach(e=>{
+  //         console.log(e,'fghj')
+  //         // let{}=e[0]
+  //         document.getElementById("id").value=e.id,
+  //        document.getElementById("firstname").value=e.firstname,
+  //       document.getElementById("scondname").value=e.scondname,
+  //     document.getElementById("phone").value=e.phone,
+  //        document.getElementById("email").value=e.email,
+  //      document.getElementById("messsages").value =e.messsages
+  //       })
+  // });
+  // }
+
+ 
+// function Get(){
+  
+//    console.log(uid,"vgggggg")
+//   fetch( 'http://localhost:3000/GET', {
+//         method: 'PUT',
+//         body: JSON.stringify({
+          
+//          firstname:document.getElementById("firstname").value,
+//          scondname: document.getElementById("scondname").value,
+//          phone: document.getElementById("phone").value,
+//          email: document.getElementById("email").value,
+//          messsages: document.getElementById("messsages").value,
+//         }),
+//         headers: {
+//           'Content-type': 'application/json; charset=UTF-8',
+//         },
+//       })
+//         .then((response) => response.json())
+//         .then((json) => console.log(json));
+      
+//     }
+
+function update(){
+  // document.getElementById('submitBtn').style.display="none";
+  //   document.getElementById('updateBtn').style.display="block";
+  
+   let uid=document.getElementById("id").value;
+   console.log(uid,"vgggggg")
+  fetch('http://localhost:3000/upadte/'+ uid, {
+        method: 'PUT',
+        body: JSON.stringify({
+          
+         firstname:document.getElementById("firstname").value,
+         scondname: document.getElementById("scondname").value,
+         phone: document.getElementById("phone").value,
+         email: document.getElementById("email").value,
+         messsages: document.getElementById("messsages").value,
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => console.log(json));
+        form.reset();
+    }
+
+  function get(){
+    document.getElementById('updateBtn').style.display="none";
+document.getElementById('submitBtn').style.display="block";
+document.getElementById('forms').reset()
+
+  fetch('http://localhost:3000/GET')
     .then(res => res.json())
     .then(user => {
 
@@ -115,9 +196,7 @@
 
       html = ""
 
-      user.forEach(e => {
-
-        html += `<tr>
+      user.forEach(e => {html += `<tr>
           <td>${e.id}</td>
  <td>${e.firstname}</td>
  <td>${e.scondname}</td>
@@ -137,25 +216,9 @@
     }).catch((err) => {
       console.log('DDD', err)
     })
+  }
+  
 </script>
 
-<!-- function updateuser(){
-  fetch('http://localhost:3000/upadte/:id', {
-        method: 'PUT',
-        body: JSON.stringify({
-          // id:document.getElementById("id").value,
-         firstname:document.getElementById("firstname").value,
-         scondname: document.getElementById("scondname").value,
-         phone: document.getElementById("phone").value,
-         email: document.getElementById("email").value,
-         messsages: document.getElementById("messsages").value,
-        }),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
-      })
-        .then((response) => response.json())
-        .then((json) => console.log(json));
-    } -->
-
+</body>
 </html>
