@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    
+    <div class="row">  
+        <div class=" col-12  col-sm-12 col-lg-6">
+          <input type="text" name="firstna" id="firstname" aria-label="First name"   placeholder=" First Name"  class="form-control">
+      
+        </div>
+        <div class=" col-12  col-sm-12 col-lg-6">
+          
+        <input type="text" name="Secondna" id="Secondnaame" aria-label="Second Name"   placeholder=" Second Name"  class="form-control">
+        </div>
+      </div>
+      <div class="row">  
+        <div class=" col-12  col-sm-12 col-lg-6">
+        
+      
+        <input type="number" aria-label="Second Name" name="phone" id="phone"  placeholder="Mobile Number"  class="form-control">
+        </div>
+        <div class=" col-12  col-sm-12 col-lg-6">
+          <!-- <input type="email" placeholder="Email Id"> -->
+      
+        <input type="text" aria-label="Second Name" name="email" id="emailid"   placeholder=" Email Id"  class="form-control">
+       
+        <textarea class="form-control"   name="messages" id="messages"  placeholder="Messages" id="floatingTextarea2" ></textarea>
+
+</div>
+      </div>
+      
+      
+      <button type="button" class="btn btn-primary" onclick="createuser()">Send Messages</button>
+    </div>
+
+
+<script>
+
+
+const express = require("express");
+var mysql = require('mysql');
+var connection = mysql.createConnection({
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: 'Password@123',
+    database: 'simplform'
+});
+app = express()
+
+app.listen(3000, () => {
+    console.log("listening on port 3000")
+})
+
+// app.get('/', (req, res) => {
+//     console.log(req.query)
+//     console.log("i am inside get")
+
+
+//     connection.query('select * from form', function (error, results) {
+//         if (error) throw error;
+//         console.log('The solution is: ', results);
+        
+//         // connection.end();
+//         res.end(JSON.stringify(results))
+//     });
+
+// });
+// app.get('/:fristname', (req, res) => {
+//     // console.log(`select * from form  where id=${req.params.id}`)
+//     // console.log(req.query)
+//     console.log("i am inside get",`select * from form  Where id=${req.params.fristname}`)
+
+
+//     connection.query(`select * from form  where firstname=?`,[req.params.fristname], function (error, results) {
+
+//         if (error) {
+//             console.log(error)
+//         }
+
+//         console.log('The solution is: ', results);
+//         res.json(results)
+       
+//         // res.end(JSON.stringify(results))
+
+        
+//     });
+
+// })
+// app.post('/http://localhost:3000/', (req, res) => {
+//     console.log(req.query)
+//     console.log("i am inside get")
+
+
+//     connection.query('select * from form', function (error, results) {
+//         if (error) throw error;
+//         console.log('The solution is: ', results);
+        
+//         // connection.end();
+//         res.end(JSON.stringify(results))
+//     });
+
+// });
+function createuser(){
+ 
+    fetch('/http://localhost:3000/', {
+           method: 'POST',
+           body: JSON.stringify({
+            firstname:document.getElementById("firstname").value,
+            Secondname: document.getElementById("scondname").value,
+            phone: document.getElementById("phone").value,
+            emailid: document.getElementById("email").value,
+            messages: document.getElementById("messages").value,
+           }),
+           headers: {
+             'Content-type': 'application/json; charset=UTF-8',
+           },
+         })
+           .then((response) => response.json())
+           .then((json) => console.log(json));
+       }
+   
+// app.post('/', (req, res) => {
+//     console.log(req.query)
+    
+
+//     connection.query('select * from form', function (error, results) {
+//         if (error) throw error;
+//         console.log('The solution is: ', results);
+        
+//         connection.end();
+//         res.end(JSON.stringify(results))
+//     });
+
+// });
+
+// fetch('http://localhost:4000/api/users', {
+//   method: 'POST',
+//   headers: { 'Content-Type': 'application/json' },
+//   body: JSON.stringify(data),
+// })
+
+// /syntex{
+//     app.get('/'api )(express.request,express.response)
+// }
+
+
+// let user=[{ id:1,name:'vignesh',age:22},
+//         {id:2,name:'magesh',age:32}]
+
+
+// // app.get('/user',(req,res)=>{
+// //     res.json(user)
+// // })
+
+// // app.get('/pull/:id',(req,res)=>{
+// //     // console.log(req.params)
+// //     res.json(user.filter(e=>e.id== req.params.id))
+// // })
+
+// // let arr=[{userid:1,name:"vicky",age:44},{userid:1,name:"vicky",age:44},{userid:1,name:"vicky",age:44},{userid:1,name:"vicky",age:44}]
+
+// // app.get('/arr/userid',(req,res)=>{
+
+// //     res.json(arr)
+// //     console.log(res)
+// //     // res.json(arr.filter(e=>e.userid== req.params.userid))
+
+// // }
+
+// // )
+
+// console.log(id)
+
+</script>
+
+</body>
+</html>
