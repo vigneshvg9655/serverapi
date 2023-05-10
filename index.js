@@ -16,41 +16,41 @@ app.use(cors())
 
 
 
-// app.get('/', (req, res) => {
-//     console.log(req.query)
-//     console.log("i am inside get")
+app.get('/', (req, res) => {
+    console.log(req.query)
+    console.log("i am inside get")
 
 
-//     connection.query('select * from form', function (error, results) {
-//         if (error) throw error;
-//         console.log('The solution is: ', results);
+    connection.query('select * from form', function (error, results) {
+        if (error) throw error;
+        console.log('The solution is: ', results);
         
-//         // connection.end();
-//         res.end(JSON.stringify(results))
-//     });
+        // connection.end();
+        res.end(JSON.stringify(results))
+    });
 
-// });
-// app.get('/:fristname', (req, res) => {
-//     // console.log(`select * from form  where id=${req.params.id}`)
-//     // console.log(req.query)
-//     console.log("i am inside get",`select * from form  Where id=${req.params.fristname}`)
+});
+app.get('/:id', (req, res) => {
+    // console.log(`select * from form  where id=${req.params.id}`)
+    // console.log(req.query)
+    console.log("i am inside get",`select * from form  Where id=${req.params.id}`)
 
 
-//     connection.query(`select * from form  where firstname=?`,[req.params.fristname], function (error, results) {
+    connection.query(`select * from form  where id=?`,[req.params.id], function (error, results) {
 
-//         if (error) {
-//             console.log(error)
-//         }
+        if (error) {
+            console.log(error)
+        }
 
-//         console.log('The solution is: ', results);
-//         res.json(results)
+        console.log('The solution is: ', results);
+        res.json(results)
        
-//         // res.end(JSON.stringify(results))
+        // res.end(JSON.stringify(results))
 
         
-//     });
+    });
 
-// })
+})
 
 app.post('/post', (req, res) => {
     // console.log("inside post", req.body)
@@ -66,7 +66,7 @@ app.post('/post', (req, res) => {
 app.put('/upadte/:id', (req, res) => {
     // console.log(`select * from form  where id=${req.params.id}`)
     //  console.log(req.params)
-    // console.log("i am inside get",`select * from form  Where id=${req.params.id}`)
+    console.log("i am inside get",`select * from form  Where id=${req.params.id}`)
 
 
     connection.query(`update form  set firstname=?,scondname=? where id=?`,[req.body.firstname,req.body.scondname,req.params.id],function (error, results) {
