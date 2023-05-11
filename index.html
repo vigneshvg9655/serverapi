@@ -12,44 +12,44 @@
 </head>
 
 <body style="padding: 232px;">
-<form id="forms">
-  <div class="row">
-    <div class=" col-12  col-sm-12 col-lg-6">
+  <form id="forms">
+    <div class="row">
+      <!-- <div class=" col-12  col-sm-12 col-lg-6">
       <input type="text" name="id" id="id" placeholder=" id" class="form-control">
 
+    </div> -->
+      <div class=" col-12  col-sm-12 col-lg-6">
+        <input type="text" name="firstname" id="firstname" placeholder=" First Name" class="form-control">
+
+      </div>
+      <div class=" col-12  col-sm-12 col-lg-6">
+
+        <input type="text" name="scondname" id="scondname" placeholder=" Second Name" class="form-control">
+      </div>
     </div>
-    <div class=" col-12  col-sm-12 col-lg-6">
-      <input type="text" name="firstname" id="firstname" placeholder=" First Name" class="form-control">
+    <div class="row">
+      <div class=" col-12  col-sm-12 col-lg-6">
+
+
+        <input type="number" name="phone" id="phone" placeholder="Mobile Number" class="form-control">
+      </div>
+      <div class=" col-12  col-sm-12 col-lg-6">
+        <!-- <input type="email" placeholder="Email Id"> -->
+
+        <input type="text" name="email" id="email" placeholder=" Email Id" class="form-control">
+
+        <textarea class="form-control" name="messsages" id="messsages" placeholder="Messages"
+          id="floatingTextarea2"></textarea>
+
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-primary" id="mvg">SendMessages</button>
+    <!-- <button type="button" class="btn btn-primary" onclick="get()">get</button> -->
+    <!-- <button type="button" class="btn btn-primary" id="mvg" onclick="update()">update</button> -->
 
     </div>
-    <div class=" col-12  col-sm-12 col-lg-6">
-
-      <input type="text" name="scondname" id="scondname" placeholder=" Second Name" class="form-control">
-    </div>
-  </div>
-  <div class="row">
-    <div class=" col-12  col-sm-12 col-lg-6">
-
-
-      <input type="number" name="phone" id="phone" placeholder="Mobile Number" class="form-control">
-    </div>
-    <div class=" col-12  col-sm-12 col-lg-6">
-      <!-- <input type="email" placeholder="Email Id"> -->
-
-      <input type="text" name="email" id="email" placeholder=" Email Id" class="form-control">
-
-      <textarea class="form-control" name="messsages" id="messsages" placeholder="Messages"
-        id="floatingTextarea2"></textarea>
-
-    </div>
-  </div>
-  
-  <button type="button" class="btn btn-primary" id="submitBtn" onclick="createuser()">Send Messages</button>
-  <button type="button" class="btn btn-primary" id="updateBtn" onclick="update()">update</button>
-  <button type="button" class="btn btn-primary" onclick="get()">get</button>
-  
-  </div>
-</form>
+  </form>
   <table>
     <thead>
       <tr>
@@ -68,11 +68,24 @@
 
     </tbody>
 
-<script>
+    <script src="function.js"></script>
+    <!-- <script>
+
 let form=document.getElementById('forms')
+let btn = document.getElementById('form-btn');
+let uniqueId;
+btn.addEventListener("click",()=>{
+
+ if(btn.textContent == "Send Messages"){
+  createuser();
+ }else{
+  update();
+ }
+})
+
   function createuser() {
    
- document.getElementById('userForm').reset()
+ 
     fetch('http://localhost:3000/post', {
       method: 'POST',
       body: JSON.stringify({
@@ -88,30 +101,30 @@ let form=document.getElementById('forms')
       },
     })
       .then((response) => response.json())
-      .then((json) => console.log(json));
-      form.reset();
+      .then((json) => {
+        getAllList()
+      });
+      
   }
 
   function edit(id) {
-    document.getElementById('updateBtn').style.display="block";
-document.getElementById('submitBtn').style.display="none";
-
-
+    uniqueId=id;
     fetch('http://localhost:3000/'+id)
       .then((response) => response.json())
-      .then((json) => {console.log(json)
-        json.forEach(e=>{
-          console.log(e,'fghj')
+      .then((res) => {
+        // console.log(json)
+        console.log('DDDD', res)
+        // json.forEach(e=>{
           // let{}=e[0]
-          document.getElementById("id").value=e.id,
-         document.getElementById("firstname").value=e.firstname,
-        document.getElementById("scondname").value=e.scondname,
-      document.getElementById("phone").value=e.phone,
-         document.getElementById("email").value=e.email,
-       document.getElementById("messsages").value =e.messsages
+          // document.getElementById("id").value=e.id,
+         document.getElementById("firstname").value=res[0].firstname;
+        document.getElementById("scondname").value=res[0].scondname;
+      document.getElementById("phone").value=res[0].phone;
+         document.getElementById("email").value=res[0].email;
+       document.getElementById("messsages").value=res[0].messsages;
        document.getElementById('form-btn').textContent = "Update";
 
-        })
+        // })
   });
   
   }
@@ -173,21 +186,25 @@ function update(){
          phone: document.getElementById("phone").value,
          email: document.getElementById("email").value,
          messsages: document.getElementById("messsages").value,
+       id:uniqueId,
         }),
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
         },
       })
         .then((response) => response.json())
-        .then((json) => console.log(json));
-        form.reset();
+        .then((json) => {
+          getAllList()
+        });
+      
     }
 
-  function get(){
-    document.getElementById('updateBtn').style.display="none";
-document.getElementById('submitBtn').style.display="block";
-document.getElementById('forms').reset()
+   
 
+  
+</script>
+<script>
+function getAllList() {
   fetch('http://localhost:3000/GET')
     .then(res => res.json())
     .then(user => {
@@ -216,9 +233,11 @@ document.getElementById('forms').reset()
     }).catch((err) => {
       console.log('DDD', err)
     })
-  }
   
-</script>
+}
 
+getAllList()  
+</script> -->
 </body>
+
 </html>

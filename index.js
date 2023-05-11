@@ -16,12 +16,13 @@ app.use(cors())
 
 
 
-app.get('/GET', (req, res) => {
+/// get api call
+app.get('/get', (req, res) => {
     console.log(req.query)
-    console.log("i am inside get")
+    console.log("i am insiddddddddddddddddddde get")
 
 
-    connection.query('select * from form', function (error, results) {
+    connection.query('select * from form where isdeleted = 0', function (error, results) {
         if (error) throw error;
         console.log('The solution is: ', results);
         
@@ -31,13 +32,15 @@ app.get('/GET', (req, res) => {
 
 });
 
+
+// GET api call using Id
 app.get('/:id', (req, res) => {
     // console.log(`select * from form  where id=${req.params.id}`)
     // console.log(req.query)
     console.log("i am inside get",`select * from form  Where id=${req.params.id}`)
 
 
-    connection.query(`select * from form  where id=?`,[req.params.id], function (error, results) {
+    connection.query(`select * from form  where id=? and isdeleted=0`,[req.params.id], function (error, results) {
 
         if (error) {
             console.log(error)
@@ -53,8 +56,10 @@ app.get('/:id', (req, res) => {
 
 })
 
+//insert api call or post api call
 app.post('/post', (req, res) => {
     // console.log("inside post", req.body)
+    console.log(req.body,"hghghh")
   connection.query(`insert into form (firstname,scondname,email,phone,messsages) values (?,?,?,?,?)`
   ,[req.body.firstname,req.body.scondname,req.body.email,req.body.phone,req.body.messsages], function (error, results) {
  
@@ -65,14 +70,15 @@ app.post('/post', (req, res) => {
   res.json(results);
  });
 })
-app.put('/upadte/:id', (req, res) => {
+
+app.put('/update/:id', (req, res) => {
     // console.log(`select * from form  where id=${req.params.id}`)
-    //  console.log(req.params)
+     console.log(req.params)
     console.log("i am inside get",`select * from form  Where id=${req.params.id}`)
 
 
     connection.query(`update form  set firstname=?,scondname=?,phone=?,email=?,messsages=?   where id=?`,[req.body.firstname,req.body.scondname,req.body.phone,req.body.email,req.body.messsages,req.params.id],function (error, results) {
-
+        console.log(req.body,"hgfgdgfdtf")
         if (error) {
             console.log(error)
         }
@@ -88,6 +94,36 @@ app.put('/upadte/:id', (req, res) => {
     });
 
 })
+//delete api call  
+
+app.delete('/delete/:id', (req, res) => {
+    // console.log(`select * from form  where id=${req.params.id}`)
+     console.log(req.params)
+    // console.log("i am inside get",`select * from form  Where id=${req.params.id}`)
+
+
+    connection.query(`update form  set isdeleted=1  where id=? `,[req.params.id],function (error, results) {
+
+        if (error) {
+            console.log(error)
+        }
+    // connection.query(`select * from  form  where id=?`,[req.params.id],function (error, results) {
+
+        console.log('The solution is: ', results);
+        res.json(results)
+       
+        // res.end(JSON.stringify(results))
+
+    // });
+        
+    });
+
+})
+app.listen(3000, () => {
+    console.log("listening on port 3000")
+})
+
+
 //  app.post('/http://localhost:3000/', (req, res) => {
 //     console.log(req.query)
 //     console.log("i am inside get")
@@ -155,6 +191,3 @@ app.put('/upadte/:id', (req, res) => {
 // // )
 
 // console.log(id)
-app.listen(3000, () => {
-    console.log("listening on port 3000")
-})
