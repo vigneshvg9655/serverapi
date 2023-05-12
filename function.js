@@ -2,7 +2,7 @@
 
 let form=document.getElementById('forms')
 let mvg= document.getElementById('mvg');
-let uniqueId;
+// let uniqueId;
 mvg.addEventListener("click",()=>{
 
  if(mvg.textContent=="SendMessages"){
@@ -28,7 +28,7 @@ mvg.addEventListener("click",()=>{
         'Content-type': 'application/json; charset=UTF-8',
       },
     })
-      .then((response) => response)
+      .then((response) => response.json)
       .then(() => {
         getAllList()
       });
@@ -36,7 +36,7 @@ mvg.addEventListener("click",()=>{
   }
 
   function edit(id) {
-    uniqueId=id;
+    // uniqueId=id;
     fetch('http://localhost:3000/'+id)
       .then((response) => response.json())
       .then((res) => {
@@ -51,7 +51,9 @@ mvg.addEventListener("click",()=>{
          document.getElementById("email").value=res[0].email;
        document.getElementById("messsages").value=res[0].messsages;
        document.getElementById('mvg').textContent = "Update";
-       update();
+
+       mvg.setAttribute("userid",id)
+      //  update();
        getAllList()
         
   });
@@ -62,9 +64,12 @@ mvg.addEventListener("click",()=>{
 
 
 function update(){
-   
-   console.log(uniqueId,"vgggggg")
-  fetch('http://localhost:3000/update/'+ uniqueId, {
+  
+
+  let id=mvg.getAttribute('userId')
+
+  //  console.log(uniqueId,"vgggggg")
+  fetch('http://localhost:3000/update/', {
         method: 'PUT',
         body: JSON.stringify({
           
@@ -73,7 +78,9 @@ function update(){
          phone: document.getElementById("phone").value,
          email: document.getElementById("email").value,
          messsages: document.getElementById("messsages").value,
-           uid:uniqueId,
+         
+         id:id,
+          // id:mvg.getAttribute('userId'),
         }),
         headers: {
           'Content-type': 'application/json; charset=UTF-8',

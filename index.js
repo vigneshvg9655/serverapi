@@ -27,7 +27,7 @@ app.get('/get', (req, res) => {
         console.log('The solution is: ', results);
         
         // connection.end();
-        res.end(JSON.stringify(results))
+        res.send(JSON.stringify(results))
     });
 
 });
@@ -67,7 +67,7 @@ app.post('/post', (req, res) => {
  
     if(error) console.log(error);
   console.log(results)
-  res.json(results);
+   res.json(results);
  });
 })
 
@@ -98,7 +98,7 @@ app.put('/update/:id', (req, res) => {
 
 app.delete('/delete/:id', (req, res) => {
     // console.log(`select * from form  where id=${req.params.id}`)
-     console.log(req.params)
+    //  console.log(req.params)
     // console.log("i am inside get",`select * from form  Where id=${req.params.id}`)
 
 
