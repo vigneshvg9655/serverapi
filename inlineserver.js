@@ -45,9 +45,51 @@ app.post('/post', (req, res) => {
 })
 
 
+app.get('/:id', (req, res) => {
+    // console.log(`select * from form  where id=${req.params.id}`)
+    // console.log(req.query)
+    console.log("i am inside get",`select * from  inline Where id=${req.params.id}`)
 
 
+    connection.query(`select * from inline where id=? `,[req.params.id], function (error, results) {
 
+        if (error) {
+            console.log(error)
+        }
+
+        console.log('The solution is: ', results);
+        res.json(results)
+       
+        // res.end(JSON.stringify(results))
+
+        
+    });
+
+})
+
+app.put('/update/:id', (req, res) => {
+    // console.log(`select * from form  where id=${req.params.id}`)
+     console.log(req.params)
+    console.log("i am inside get",`select * from inline   Where id=${req.params.id}`)
+
+
+    connection.query(`update inline set sname=?,fname=?,email=?,messages=?   where id=?`,[req.body.firstname,req.body.scondname,req.body.phone,req.body.email,req.body.messsages,req.params.id],function (error, results) {
+        console.log(req.body,"hgfgdgfdtf")
+        if (error) {
+            console.log(error)
+        }
+    connection.query(`select * from  inline where id=?`,[req.params.id],function (error, results) {
+
+        console.log('The solution is: ', results);
+        res.json(results)
+       
+        // res.end(JSON.stringify(results))
+
+    });
+        
+    });
+
+})
 
 
 

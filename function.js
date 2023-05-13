@@ -2,7 +2,6 @@
 
 let form=document.getElementById('forms')
 let mvg= document.getElementById('mvg');
-// let uniqueId;
 mvg.addEventListener("click",()=>{
 
  if(mvg.textContent=="SendMessages"){
